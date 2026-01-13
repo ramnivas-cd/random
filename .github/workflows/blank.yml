@@ -20,8 +20,8 @@ jobs:
       # # ---------------------------
       # # Checkout code
       # # ---------------------------
-      # - name: Checkout repo
-      #   uses: actions/checkout@v4
+       - name: Checkout repo
+         uses: actions/checkout@v4
 
       # # ---------------------------
       # # AWS authentication
@@ -112,4 +112,7 @@ jobs:
       #     kubectl get svc -n $HELM_NAMESPACE
 
       - name: Placeholder Step
-        run: pwd
+        run: |
+            pwd
+            ls -la
+            

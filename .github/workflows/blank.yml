@@ -1,0 +1,115 @@
+name: Build, Push to ECR & Deploy to EKS
+
+on:
+  workflow_dispatch:
+
+# env:
+  # AWS_REGION: ap-south-1
+  # CLUSTER_NAME: ram-eks-dev-cluster
+  # HELM_RELEASE: frontend
+  # HELM_NAMESPACE: default
+
+  # ECR_REPO: netflix
+  # IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # # ---------------------------
+      # # Checkout code
+      # # ---------------------------
+      # - name: Checkout repo
+      #   uses: actions/checkout@v4
+
+      # # ---------------------------
+      # # AWS authentication
+      # # ---------------------------
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: ${{ env.AWS_REGION }}
+
+      # # ---------------------------
+      # # Get AWS Account ID
+      # # ---------------------------
+      # - name: Get AWS Account ID
+      #   run: |
+      #     echo "ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)" >> $GITHUB_ENV
+
+      # # ---------------------------
+      # # Create ECR repo if not exists
+      # # ---------------------------
+      # - name: Create ECR repository
+      #   run: |
+      #     aws ecr describe-repositories \
+      #       --repository-names $ECR_REPO \
+      #       --region $AWS_REGION >/dev/null 2>&1 || \
+      #     aws ecr create-repository \
+      #       --repository-name $ECR_REPO \
+      #       --image-scanning-configuration scanOnPush=true \
+      #       --region $AWS_REGION
+
+      # # ---------------------------
+      # # Login to Amazon ECR
+      # # ---------------------------
+      # - name: Login to Amazon ECR
+      #   uses: aws-actions/amazon-ecr-login@v2
+
+      # # ---------------------------
+      # # Build & Push Docker image
+      # # ---------------------------
+      # - name: Build and push Docker image
+      #   run: |
+      #     ECR_URI=$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO
+
+      #     docker build \
+      #       -t $ECR_URI:$IMAGE_TAG \
+      #       ./frontend-project
+
+      #     docker push $ECR_URI:$IMAGE_TAG
+
+      # # ---------------------------
+      # # Setup kubectl
+      # # ---------------------------
+      # - name: Setup kubectl
+      #   uses: azure/setup-kubectl@v4
+
+      # # ---------------------------
+      # # Setup Helm
+      # # ---------------------------
+      # - name: Setup Helm
+      #   uses: azure/setup-helm@v4
+
+      # # ---------------------------
+      # # Update kubeconfig
+      # # ---------------------------
+      # - name: Update kubeconfig
+      #   run: |
+      #     aws eks update-kubeconfig \
+      #       --region $AWS_REGION \
+      #       --name $CLUSTER_NAME
+
+      # # ---------------------------
+      # # Deploy using Helm
+      # # ---------------------------
+      # - name: Helm Upgrade Install
+      #   run: |
+      #     helm upgrade --install $HELM_RELEASE $HELM_CHART_PATH \
+      #       --namespace $HELM_NAMESPACE \
+      #       --create-namespace \
+      #       -f $HELM_CHART_PATH/values.yaml
+
+      # # ---------------------------
+      # # Verify deployment
+      # # ---------------------------
+      # - name: Verify deployment
+      #   run: |
+      #     kubectl get pods -n $HELM_NAMESPACE
+      #     kubectl get svc -n $HELM_NAMESPACE
+
+      - name: Placeholder Step
+        run: pwd
